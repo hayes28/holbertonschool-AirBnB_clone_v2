@@ -32,6 +32,7 @@ def pyis(text):
 
 
 @app.route('/number/<n>', strict_slashes=False)
+@app.route('/python/<text>', strict_slashes=False)
 def num(n):
     """ displays n is a number only if n is an integer """
     return "{} is a number".format(n)
