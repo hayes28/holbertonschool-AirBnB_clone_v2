@@ -32,8 +32,8 @@ def pyis(text="is cool"):
     return "Python {}".format(text.replace("_", " "))
 
 
-@app.route('/number/<n>', strict_slashes=False)
-def num(n):
+@app.route('/number/<int:n>', strict_slashes=False)
+def num(n: int):
     """ displays n is a number only if n is an integer """
     return "{} is a number".format(n)
 
