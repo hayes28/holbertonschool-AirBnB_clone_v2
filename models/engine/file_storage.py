@@ -1,20 +1,3 @@
-#!/usr/bin/python3
-"""This module defines a class to manage file storage for hbnb clone"""
-import json
-from datetime import datetime
-
-
-class FileStorage:
-    """This class manages storage of hbnb models in JSON format"""
-    __file_path = 'file.json'
-    __objects = {}
-
-    def all(self, cls=None):
-        """Returns a dictionary of models currently in storage"""
-        if cls is not None:
-            if type(cls) == str:
-                cls = eval(cls)
-            spec_dict = {}
             for k, v in self.__objects.items():
                 if cls == type(v):
                     spec_dict[k] = v
@@ -64,3 +47,7 @@ class FileStorage:
             del self.__objects[key]
         except (AttributeError, KeyError):
             pass
+
+    def close(self):
+        """ deserializes the JSON file to objects """
+        self.reload()
