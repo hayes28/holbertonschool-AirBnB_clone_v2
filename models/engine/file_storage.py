@@ -4,15 +4,16 @@ import json
 from datetime import datetime
 
 
+class FileStorage:
+    """This class manages storage of hbnb models in JSON format"""
+    __file_path = 'file.json'
+    __objects = {}
+
 class CustomJSONEncoder(json.JSONEncoder):
     def default(self, obj):
         if isinstance(obj, datetime):
             return obj.isoformat()
         return super().default(obj)
-class FileStorage:
-    """This class manages storage of hbnb models in JSON format"""
-    __file_path = 'file.json'
-    __objects = {}
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
@@ -36,7 +37,7 @@ class FileStorage:
             temp.update(FileStorage.__objects)
             for key, val in temp.items():
                 temp[key] = val.to_dict()
-            json.dump(temp, f, cls=CustomJSONEncoder)
+        json.dump(temp, f, cls=CustomJSONEncoder)
 
 
     def reload(self):
