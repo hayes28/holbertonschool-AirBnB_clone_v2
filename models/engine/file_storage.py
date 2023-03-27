@@ -9,12 +9,6 @@ class FileStorage:
     __file_path = 'file.json'
     __objects = {}
 
-class CustomJSONEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, datetime):
-            return obj.isoformat()
-        return super().default(obj)
-
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls is not None:
