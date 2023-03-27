@@ -79,3 +79,4 @@ class DBStorage:
 
     def total(self):
         return len(self.__session.query(Review).all())
+
