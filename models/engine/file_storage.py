@@ -15,12 +15,20 @@ class FileStorage:
     """This class manages storage of hbnb models in JSON format"""
     __file_path = 'file.json'
     __objects = {}
+    CDIC = {
+        'City': City,
+        'Place': Place,
+        'Review': Review,
+        'State': State,
+        'Amenity': Amenity,
+        'User': User
+    }
 
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls is not None:
-            if type(cls) == str:
-                cls = eval(cls)
+            if cls in self.CDIC.keys():
+                cls = self.CDIC.get(cls)
             spec_dict = {}
             for k, v in self.__objects.items():
                 if cls == type(v):
