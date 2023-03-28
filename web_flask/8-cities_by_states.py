@@ -21,12 +21,12 @@ def cities_states():
 
 @app.teardown_appcontext
 def teardown(exc):
-        """
+    """
     After each request you must remove the current SQLAlchemy Session:
     Declare a method to handle @app.teardown_appcontext
     Call in this method storage.close()
     """
-storage.close()
+    storage.close()
 
 
 if __name__ == '__main__':
