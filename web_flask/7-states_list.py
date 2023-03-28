@@ -26,7 +26,7 @@ def teardown(exc):
     Declare a method to handle @app.teardown_appcontext
     Call in this method storage.close()
     """
-    storage.close()
+storage.close()
 
 
 if __name__ == "__main__":
