@@ -9,7 +9,7 @@ from flask import Flask, render_template
 app = Flask(__name__)
 
 
-@app.route('/cities_by_states', strict_slashes=False)
+@app.route("/cities_by_states", strict_slashes=False)
 def cities_states():
     """ /states_list: display a HTML page: (inside the tag BODY)
     H1 tag: “States”
@@ -17,7 +17,7 @@ def cities_states():
     sorted by name (A->Z) tipLI tag: description of one State: <state.id>:
     <B><state.name></B> """
     states = storage.all('State')
-    return render_template('8-cities_by_states.html', states=states)
+    return render_template("8-cities_by_states.html", states=states)
 
 
 @app.teardown_appcontext
