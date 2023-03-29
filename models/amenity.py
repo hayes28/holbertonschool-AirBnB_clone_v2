@@ -8,6 +8,9 @@ STO_TYP = getenv('HBNB_TYPE_STORAGE')
 
 
 class Amenity(BaseModel, Base):
+    """
+    Amenity class
+    """
     if STO_TYP == "db":
         from models.place import place_amenity
         __tablename__ = 'amenities'

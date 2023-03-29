@@ -25,6 +25,9 @@ class BaseModel:
                             default=datetime.utcnow(), nullable=False)
 
     def __init__(self, *args, **kwargs):
+        """
+        Instantiates a new model
+        """
         if not kwargs:
             kwargs = {}
         kwargs.setdefault('id', str(uuid4()))
