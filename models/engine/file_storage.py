@@ -20,8 +20,10 @@ class FileStorage:
     }
 
     def all(self, cls=None):
-        """Returns a dictionary of models currently in storage
-        if cls specified, only returns that class"""
+        """
+        Returns a dictionary of models currently in storage
+        if cls specified, only returns that class
+        """
         if cls is not None:
             if cls in self.CDIC.keys():
                 cls = self.CDIC.get(cls)
