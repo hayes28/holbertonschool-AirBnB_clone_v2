@@ -8,6 +8,7 @@ import os
 
 
 if os.getenv("HBNB_TYPE_STORAGE") == 'db':
+    from models.place import place_amenity
 
     class Amenity(BaseModel, Base):
         """
