@@ -8,6 +8,9 @@ from models import city, place, review, state, amenity, user
 
 
 class DBStorage:
+    """
+    DBStorage class
+    """
     __engine = None
     __session = None
     CDIC = {
@@ -20,6 +23,9 @@ class DBStorage:
     }
 
     def __init__(self):
+        """
+        Constructor
+        """
         self.__engine = create_engine("mysql+mysqldb://{}:{}@{}/{}".format(
                                             getenv('HBNB_MYSQL_USER'),
                                             getenv('HBNB_MYSQL_PWD'),
@@ -28,22 +34,37 @@ class DBStorage:
                                       pool_pre_ping=True)
 
     def reload(self):
+        """
+        Reloads the database
+        """
         Base.metadata.create_all(self.__engine)
         the_session = sessionmaker(bind=self.__engine, expire_on_commit=False)
         Session = scoped_session(the_session)
         self.__session = Session()
 
     def new(self, obj):
+        """
+        Adds an object to the database
+        """
         self.__session.add(obj)
 
     def save(self):
+        """
+          Save this
+        """
         self.__session.commit()
 
     def delete(self, obj=None):
+        """
+        Deletes an object from the database
+        """
         if obj is not None:
             self.__session.delete(obj)
 
     def all(self, cls=None):
+        """
+        Returns a dictionary of all objects in the database
+        """
         obj_dct = {}
         qry = []
         if cls is None:
@@ -59,13 +80,22 @@ class DBStorage:
         return obj_dct
 
     def gettables(self):
+        """
+        Returns a list of all tables in the database
+        """
         inspector = inspect(self.__engine)
         return inspector.get_table_names()
 
     def close(self):
+        """
+        Closes the session
+        """
         self.__session.close()
 
     def hcf(self, cls):
+        """
+        Hard close function
+        """
         metadata = MetaData()
         metadata.reflect(bind=self.__engine)
         table = metadata.tables.get(cls.__tablename__)
