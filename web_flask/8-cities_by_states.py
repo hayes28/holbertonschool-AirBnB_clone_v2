@@ -1,5 +1,6 @@
 #!/usr/bin/python3
-""" You must use storage for fetching data
+"""
+You must use storage for fetching data
 from the storage engine (FileStorage or DBStorage) =>
 from models import storage and storage.all(...) """
 from models import storage
