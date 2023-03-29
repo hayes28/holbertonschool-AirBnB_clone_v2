@@ -21,7 +21,7 @@ app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.teardown_appcontext
+
 def teardown(stuff):
     """
     Remove current SQLAlchemy session
