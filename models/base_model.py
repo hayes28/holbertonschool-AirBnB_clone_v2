@@ -1,28 +1,23 @@
 #!/usr/bin/python3
-"""This module defines a base class for all models in our hbnb clone"""
+"""
+This module defines a base class for all models in our hbnb clone
+"""
 import models
 from uuid import uuid4
 from datetime import datetime
 from sqlalchemy import Column, DateTime, String
 from sqlalchemy.ext.declarative import declarative_base
-from os import getenv
-
-STO_TYP = getenv("HBNB_TYPE_STORAGE")
-if STO_TYP == 'db':
-    Base = declarative_base()
-else:
-    class Base:
-        pass
+Base = declarative_base()
 
 
 class BaseModel:
     """A base class for all hbnb models"""
-    if STO_TYP == 'db':
-        id = Column(String(60), primary_key=True, nullable=False, unique=True)
-        created_at = Column(DateTime,
-                            default=datetime.utcnow(), nullable=False)
-        updated_at = Column(DateTime,
-                            default=datetime.utcnow(), nullable=False)
+    id = Column(String(60, collation='utf8mb4_0900_ai_ci'),
+                primary_key=True, nullable=False, unique=True)
+    created_at = Column(DateTime,
+                        default=datetime.utcnow(), nullable=False)
+    updated_at = Column(DateTime,
+                        default=datetime.utcnow(), nullable=False)
 
     def __init__(self, *args, **kwargs):
         """
@@ -41,7 +36,6 @@ class BaseModel:
             kwargs['updated_at'] = datetime.strptime(
                 kwargs['updated_at'], "%Y-%m-%d %H:%M:%S.%f"
             )
-        if STO_TYP != 'db':
             kwargs.pop('__class__', None)
         for attr, val in kwargs.items():
             setattr(self, attr, val)
@@ -58,17 +52,16 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """returns dictionary of BaseModel"""
-        cls_nam = self.__class__.__name__
-        richard = {
-            k: v if type(v) == str else str(v)
-            for k, v in self.__dict__.items()
-        }
-        richard.update({
-            '__class__': cls_nam
-            })
-        richard.pop("_sa_instance_state", None)
-        return richard
+        """Convert instance into dict format"""
+        dictionary = {}
+        dictionary.update(self.__dict__)
+        dictionary.update({'__class__':
+                          (str(type(self)).split('.')[-1]).split('\'')[0]})
+        dictionary['created_at'] = self.created_at.isoformat()
+        dictionary['updated_at'] = self.updated_at.isoformat()
+        if '_sa_instance_state' in dictionary:
+            del dictionary['_sa_instance_state']
+        return dictionary
 
     def delete(self):
         """deletes basemodel instance"""
