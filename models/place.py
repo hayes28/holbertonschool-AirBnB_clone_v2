@@ -52,28 +52,21 @@ class Place(BaseModel, Base):
         def reviews(self):
             """ getter for reviews in filestorage use"""
             from models import storage
-            reviewList = []
-
-            for val in storage.all(Review).values():
-                if val.place_id == self.id:
-                    reviewList.append(val)
-            return reviewList
+            return [val for val in storage.all(Review).values() if val.place_id == self.id]
 
         @property
         def amenities(self):
-            """ getter for amenity table.
-                returns the list of Amenity instances where Amenity.id
-                is linked to Place
-            """
+            """ getter for amenity table. returns the list of
+            Amenity instances where Amenity. id is linked to Place"""
             from models import storage
             from models.amenity import Amenity
-            amenity_list = []
             amenity_dict = storage.all(Amenity)
 
-            for amenity_inst in amenity_dict.values():
-                if amenity_inst.id == self.amenity_id:
-                    amenity_list.append(amenity_inst)
-            return amenity_list
+            return [
+                amenity_inst
+                for amenity_inst in amenity_dict.values()
+                if amenity_inst.id == self.amenity_id
+            ]
 
         @amenities.setter
         def amenities(self, amenity_list):
