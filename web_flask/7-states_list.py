@@ -8,10 +8,10 @@ from models.state import State
 
 
 app = Flask(__name__)
-app.url_map.strict_slashes = False
+#app.url_map.strict_slashes = False
 
 
-@app.route("/states_list")
+@app.route("/states_list", strict_slashes=False)
 def state_list():
     """
     Displays an HTML formatted list of states from DBStorage
@@ -29,4 +29,4 @@ def teardown(stuff):
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port="5000")
+    app.run(host="0.0.0.0", port=5000)
