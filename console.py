@@ -33,6 +33,9 @@ class HBNBCommand(cmd.Cmd):
             }
 
     def convert_str_to_num(self, arg: str):
+        """
+        Converts a string to an int or float if possible
+        """
         with contextlib.suppress(Exception):
             return int(arg)
         try:
@@ -124,6 +127,9 @@ class HBNBCommand(cmd.Cmd):
         pass
 
     def do_create(self, line):
+        """
+        Creates a new instance of BaseModel, saves it (to the JSON file)
+        """
         if not line:
             print(" class name missing ")
             return
