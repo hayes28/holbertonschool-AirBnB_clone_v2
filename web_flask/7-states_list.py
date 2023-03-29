@@ -1,35 +1,42 @@
 #!/usr/bin/python3
 """
-You must use storage for fetching data from
-the storage engine (FileStorage or DBStorage) =>
+Script that starts a Flask web application listening on 0.0.0.0:5000
+Use storage for fetching data from the storage engine File or DB storage
 from models import storage and storage.all(...)
+After each request, remove current SQLAlchemy Session:
+    Declare method to handle @app.teardown_appcontext
+    Call in this method: storage.close()
+Route /states_list: display a HTML page
+    H1 tag: "States"
+    UL tag: list of all State objects present in DBStorage sorted by name
+        LI tag: Description of one State: <state.id>: <<B><state.name></B>
+Must use option strict_slashes=False
 """
+from flask import Flask, render_template
 from models import storage
-from flask import render_template, Flask
 from models.state import State
 
 
 app = Flask(__name__)
-
-
-@app.route("/states_list", strict_slashes=False)
-def states_list():
-    """
-    /states_list: display a HTML page: (inside the tag BODY)
-    """
-    states = storage.all(State)
-    return render_template("7-states_list.html", states=states)
+app.url_map.strict_slashes = False
 
 
 @app.teardown_appcontext
-def teardown(exc):
+def teardown(stuff):
     """
-    After each request you must remove the current SQLAlchemy Session:
-    Declare a method to handle @app.teardown_appcontext
-    Call in this method storage.close()
+    Remove current SQLAlchemy session
     """
     storage.close()
 
 
+@app.route("/states_list")
+def state_list():
+    """
+    Displays an HTML formatted list of states from DBStorage
+    """
+    states = storage.all(State)
+    return render_template("7-states_list.html", state_list=states)
+
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host="0.0.0.0", port="5000")
