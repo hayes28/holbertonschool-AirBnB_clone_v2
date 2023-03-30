@@ -13,6 +13,9 @@ import os
 
 
 class DBStorage:
+    """
+    This class manages storage of hbnb models in SQL database
+    """
     __engine = None
     __session = None
     __all_classes = {"state": State, "city": City, "amenity": Amenity,
