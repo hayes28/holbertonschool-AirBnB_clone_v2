@@ -3,33 +3,30 @@
 
 from flask import Flask, render_template
 from models import storage
+from models.state import State
+from models.city import City
 
 app = Flask(__name__)
 
 
+app.url_map.strict_slashes = False
 
-@app.route("/states", strict_slashes=False)
-def states():
-    """Display a HTML page with a list of all State objects
-    present in DBStorage sorted by name (A->Z)"""
+
+@app.route("/states")
+@app.route("/states/<id>")
+def states_id_route(id=None):
+    """
+    Displays an HTML formatted of cities with a given State id
+    """
     states = storage.all(State)
-    sorted_states_list = sorted(states.values(), key=lambda state: state.name)
-    return render_template('9-states.html',
-                           states=sorted_states_list, display_all=True)
-
-
-@app.route("/states/<id>", strict_slashes=False)
-def states_id(id):
-    """Display a HTML page with information about a specific State
-    based on its id"""
-    states = storage.all(State)
-    state = states.get("State.{}".format(id))
-    return render_template('9-states.html', state=state, display_all=False)
+    return render_template("9-states.html", state_list=states, id=id)
 
 
 @app.teardown_appcontext
-def close_storage(exception):
-    """Remove the current SQLAlchemy Session"""
+def teardown(stuff):
+    """
+    Remove current SQLAlchemy session
+    """
     storage.close()
 
 
