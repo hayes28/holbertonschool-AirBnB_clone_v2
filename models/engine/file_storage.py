@@ -16,6 +16,7 @@ class FileStorage:
     __objects = {}
     __all_classes = {"state": State, "city": City, "amenity": Amenity,
                      "place": Place, "review": Review, "user": User}
+
     def all(self, cls=None):
         """Returns a dictionary of models currently in storage"""
         if cls is None:
