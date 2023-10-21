@@ -28,8 +28,8 @@ else:
             """getter attribute cities that returns the list of City
             with state_id equals to the current State.id"""
             from models import storage
-            list_cities = []
-            for key, value in storage.all(City).items():
-                if value.state_id == self.id:
-                    list_cities.append(value)
-            return list_cities
+            return [
+                value
+                for key, value in storage.all(City).items()
+                if value.state_id == self.id
+            ]

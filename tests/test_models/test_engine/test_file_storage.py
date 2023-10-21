@@ -10,12 +10,9 @@ class test_fileStorage(unittest.TestCase):
     """ Class to test the file storage method """
 
     @unittest.skipIf(os.getenv("HBNB_ENV") is not None, "Testing DBStorage")
-    
     def setUp(self):
         """ Set up test environment """
-        del_list = []
-        for key in storage._FileStorage__objects.keys():
-            del_list.append(key)
+        del_list = list(storage._FileStorage__objects.keys())
         for key in del_list:
             del storage._FileStorage__objects[key]
 
