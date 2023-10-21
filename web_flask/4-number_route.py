@@ -22,20 +22,20 @@ def hbnb():
 @app.route('/c/<text>', strict_slashes=False)
 def cis(text):
     """ displays C followed by the value of the text variable """
-    return "C {}".format(text.replace("_", " "))
+    return f'C {text.replace("_", " ")}'
 
 
 @app.route('/python', strict_slashes=False)
 @app.route('/python/<text>', strict_slashes=False)
 def pyis(text="is cool"):
     """ displays Python followed by the value of the text variable """
-    return "Python {}".format(text.replace("_", " "))
+    return f'Python {text.replace("_", " ")}'
 
 
 @app.route('/number/<int:n>', strict_slashes=False)
 def num(n: int):
     """ displays n is a number only if n is an integer """
-    return "{} is a number".format(n)
+    return f"{n} is a number"
 
 
 if __name__ == "__main__":

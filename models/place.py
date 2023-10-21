@@ -56,22 +56,22 @@ else:
             """getter for reviews """
             from models import storage
             from models.review import Review
-            reviews = []
-            for key, value in storage.all(Review).items():
-                if value.place_id == self.id:
-                    reviews.append(value)
-            return reviews
+            return [
+                value
+                for key, value in storage.all(Review).items()
+                if value.place_id == self.id
+            ]
 
         @property
         def amenities(self):
             """getter for amenities """
             from models import storage
             from models.amenity import Amenity
-            amenities = []
-            for key, value in storage.all(Amenity).items():
-                if value.id in self.amenity_ids:
-                    amenities.append(value)
-            return amenities
+            return [
+                value
+                for key, value in storage.all(Amenity).items()
+                if value.id in self.amenity_ids
+            ]
 
         @amenities.setter
         def amenities(self, obj):
